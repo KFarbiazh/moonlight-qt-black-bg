@@ -4,6 +4,13 @@ import QtQuick.Controls 2.2
 import ComputerManager 1.0
 
 Item {
+    // Black backdrop instead of the default gray Material window background
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        z: -1
+    }
+
     function onSearchingComputer() {
         stageLabel.text = qsTr("Establishing connection to PC...")
     }

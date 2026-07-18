@@ -7,6 +7,14 @@ import Session 1.0
 import SystemProperties 1.0
 
 Item {
+    // Black backdrop for the connection screen instead of the
+    // default gray Material window background
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        z: -1
+    }
+
     property Session session
     property string appName
     property string stageText : isResume ? qsTr("Resuming %1...").arg(appName) :
