@@ -1,4 +1,5 @@
 # Moonlight PC
+> **Fork note:** this fork changes the background color of the connection/loading screens from gray to black. A prebuilt Linux AppImage (tested on Steam Deck) is available in [Releases](https://github.com/KFarbiazh/moonlight-qt-black-bg/releases).
 
 [Moonlight PC](https://moonlight-stream.org) is an open source PC client for NVIDIA GameStream and [Sunshine](https://github.com/LizardByte/Sunshine).
 
