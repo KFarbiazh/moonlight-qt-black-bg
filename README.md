@@ -9,11 +9,11 @@
 
 | Black loading screen | Background selection | Compact overlay in game |
 |---|---|---|
-| ![Black loading screen](docs/screenshots/loading-screen-black.jpg) | ![Loading screen background setting](docs/screenshots/settings-loading-background.jpg) | ![Compact performance overlay](docs/screenshots/overlay-compact.jpg) |
+| ![Black loading screen](docs/screenshots/loading-screen-black.jpg) | ![Loading screen background setting](docs/screenshots/settings-loading-background.png) | ![Compact performance overlay](docs/screenshots/overlay-compact.jpg) |
 
 | Overlay mode selection | Full stats with bitrate |
 |---|---|
-| ![Performance overlay setting](docs/screenshots/settings-performance-overlay.jpg) | ![Bitrate in the performance overlay](docs/screenshots/overlay-bitrate.jpg) |
+| ![Performance overlay setting](docs/screenshots/settings-performance-overlay.png) | ![Bitrate in the performance overlay](docs/screenshots/overlay-bitrate.jpg) |
 
 [Moonlight PC](https://moonlight-stream.org) is an open source PC client for NVIDIA GameStream and [Sunshine](https://github.com/LizardByte/Sunshine).
 
