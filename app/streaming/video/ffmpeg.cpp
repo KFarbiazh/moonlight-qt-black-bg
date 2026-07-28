@@ -881,29 +881,20 @@ void FFmpegVideoDecoder::stringifyVideoStats(VIDEO_STATS& stats, char* output, i
 
     if (stats.receivedFps > 0) {
         if (m_VideoDecoderCtx != nullptr) {
-#ifdef DISPLAY_BITRATE
-            double avgVideoMbps = m_BwTracker.GetAverageMbps();
-            double peakVideoMbps = m_BwTracker.GetPeakMbps();
-#endif
+            double avgVideoKbps = m_BwTracker.GetAverageMbps() * 1000.0;
+            double peakVideoKbps = m_BwTracker.GetPeakMbps() * 1000.0;
 
             ret = snprintf(&output[offset],
                            length - offset,
                            "Video stream: %dx%d %.2f FPS (Codec: %s)\n"
-#ifdef DISPLAY_BITRATE
-                           "Bitrate: %.1f Mbps, Peak (%us): %.1f\n"
-#endif
-                           ,
+                           "Bitrate: %.0f kbps, Peak (%us): %.0f kbps\n",
                            m_VideoDecoderCtx->width,
                            m_VideoDecoderCtx->height,
                            stats.totalFps,
-                           codecString
-#ifdef DISPLAY_BITRATE
-                           ,
-                           avgVideoMbps,
+                           codecString,
+                           avgVideoKbps,
                            m_BwTracker.GetWindowSeconds(),
-                           peakVideoMbps
-#endif
-                           );
+                           peakVideoKbps);
             if (ret < 0 || ret >= length - offset) {
                 SDL_assert(false);
                 return;
