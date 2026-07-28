@@ -5,12 +5,7 @@ import ComputerManager 1.0
 import Session 1.0
 
 Item {
-    // Black backdrop instead of the default gray Material window background
-    Rectangle {
-        anchors.fill: parent
-        color: "black"
-        z: -1
-    }
+    SegueBackground { }
 
     property string appName
     property var quitRunningAppFn

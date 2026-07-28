@@ -108,6 +108,15 @@ public:
     };
     Q_ENUM(CaptureSysKeysMode);
 
+    enum LoadingBackground
+    {
+        LB_BLACK,
+        LB_GRAY,
+        LB_MIDNIGHT,
+        LB_SLATE,
+    };
+    Q_ENUM(LoadingBackground);
+
     Q_PROPERTY(int width MEMBER width NOTIFY displayModeChanged)
     Q_PROPERTY(int height MEMBER height NOTIFY displayModeChanged)
     Q_PROPERTY(int fps MEMBER fps NOTIFY displayModeChanged)
@@ -145,6 +154,7 @@ public:
     Q_PROPERTY(bool keepAwake MEMBER keepAwake NOTIFY keepAwakeChanged)
     Q_PROPERTY(CaptureSysKeysMode captureSysKeysMode MEMBER captureSysKeysMode NOTIFY captureSysKeysModeChanged)
     Q_PROPERTY(Language language MEMBER language NOTIFY languageChanged);
+    Q_PROPERTY(LoadingBackground loadingBackground MEMBER loadingBackground NOTIFY loadingBackgroundChanged)
 
     Q_INVOKABLE bool retranslate();
 
@@ -187,6 +197,7 @@ public:
     UIDisplayMode uiDisplayMode;
     Language language;
     CaptureSysKeysMode captureSysKeysMode;
+    LoadingBackground loadingBackground;
 
 signals:
     void displayModeChanged();
@@ -224,6 +235,7 @@ signals:
     void captureSysKeysModeChanged();
     void keepAwakeChanged();
     void languageChanged();
+    void loadingBackgroundChanged();
 
 private:
     explicit StreamingPreferences(QQmlEngine *qmlEngine);

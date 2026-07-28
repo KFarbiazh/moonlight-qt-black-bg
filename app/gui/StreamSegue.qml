@@ -7,13 +7,7 @@ import Session 1.0
 import SystemProperties 1.0
 
 Item {
-    // Black backdrop for the connection screen instead of the
-    // default gray Material window background
-    Rectangle {
-        anchors.fill: parent
-        color: "black"
-        z: -1
-    }
+    SegueBackground { }
 
     property Session session
     property string appName

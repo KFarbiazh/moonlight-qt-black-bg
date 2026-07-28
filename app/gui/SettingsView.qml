@@ -1251,6 +1251,57 @@ Flickable {
                     }
                 }
 
+                Label {
+                    width: parent.width
+                    id: loadingBackgroundTitle
+                    text: qsTr("Loading screen background")
+                    font.pointSize: 12
+                    wrapMode: Text.Wrap
+                }
+
+                AutoResizingComboBox {
+                    // ignore setting the index at first, and actually set it when the component is loaded
+                    Component.onCompleted: {
+                        var saved_loadingbg = StreamingPreferences.loadingBackground
+                        currentIndex = 0
+                        for (var i = 0; i < loadingBackgroundListModel.count; i++) {
+                            var el_loadingbg = loadingBackgroundListModel.get(i).val;
+                            if (saved_loadingbg === el_loadingbg) {
+                                currentIndex = i
+                                break
+                            }
+                        }
+
+                        activated(currentIndex)
+                    }
+
+                    id: loadingBackgroundComboBox
+                    textRole: "text"
+                    model: ListModel {
+                        id: loadingBackgroundListModel
+                        ListElement {
+                            text: qsTr("Black")
+                            val: StreamingPreferences.LB_BLACK
+                        }
+                        ListElement {
+                            text: qsTr("Gray (Moonlight default)")
+                            val: StreamingPreferences.LB_GRAY
+                        }
+                        ListElement {
+                            text: qsTr("Midnight blue")
+                            val: StreamingPreferences.LB_MIDNIGHT
+                        }
+                        ListElement {
+                            text: qsTr("Slate")
+                            val: StreamingPreferences.LB_SLATE
+                        }
+                    }
+                    // ::onActivated must be used, as it only listens for when the index is changed by a human
+                    onActivated : {
+                        StreamingPreferences.loadingBackground = loadingBackgroundListModel.get(currentIndex).val
+                    }
+                }
+
                 CheckBox {
                     id: connectionWarningsCheck
                     width: parent.width
