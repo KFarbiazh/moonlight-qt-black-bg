@@ -5,6 +5,10 @@
 >
 > A prebuilt Linux AppImage with the full HDR stack (tested on Steam Deck) is available in [Releases](https://github.com/KFarbiazh/moonlight-qt-black-bg/releases).
 
+| Black loading screen | Background selection | Bitrate on the overlay |
+|---|---|---|
+| ![Black loading screen](docs/screenshots/loading-screen-black.jpg) | ![Loading screen background setting](docs/screenshots/settings-loading-background.jpg) | ![Bitrate in the performance overlay](docs/screenshots/overlay-bitrate.jpg) |
+
 [Moonlight PC](https://moonlight-stream.org) is an open source PC client for NVIDIA GameStream and [Sunshine](https://github.com/LizardByte/Sunshine).
 
 Moonlight also has mobile versions for [Android](https://github.com/moonlight-stream/moonlight-android) and [iOS](https://github.com/moonlight-stream/moonlight-ios).
