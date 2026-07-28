@@ -1,13 +1,19 @@
 # Moonlight PC
 > **Fork note:** this fork improves the connection/loading screens and the stats overlay:
 > - black loading screen background by default, selectable in the settings (Black / Gray / Midnight blue / Slate);
-> - video bitrate in kbps (average + peak) on the performance overlay.
+> - compact performance overlay mode — a single clean line with FPS, bitrate and total added latency;
+> - video bitrate in kbps on the performance overlay (average + peak in full mode);
+> - overlay text is white without an outline, and turns yellow/red when your connection degrades.
 >
 > A prebuilt Linux AppImage with the full HDR stack (tested on Steam Deck) is available in [Releases](https://github.com/KFarbiazh/moonlight-qt-black-bg/releases).
 
-| Black loading screen | Background selection | Bitrate on the overlay |
+| Black loading screen | Background selection | Compact overlay in game |
 |---|---|---|
-| ![Black loading screen](docs/screenshots/loading-screen-black.jpg) | ![Loading screen background setting](docs/screenshots/settings-loading-background.jpg) | ![Bitrate in the performance overlay](docs/screenshots/overlay-bitrate.jpg) |
+| ![Black loading screen](docs/screenshots/loading-screen-black.jpg) | ![Loading screen background setting](docs/screenshots/settings-loading-background.jpg) | ![Compact performance overlay](docs/screenshots/overlay-compact.jpg) |
+
+| Overlay mode selection | Full stats with bitrate |
+|---|---|
+| ![Performance overlay setting](docs/screenshots/settings-performance-overlay.jpg) | ![Bitrate in the performance overlay](docs/screenshots/overlay-bitrate.jpg) |
 
 [Moonlight PC](https://moonlight-stream.org) is an open source PC client for NVIDIA GameStream and [Sunshine](https://github.com/LizardByte/Sunshine).
 
