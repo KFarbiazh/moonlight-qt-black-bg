@@ -52,6 +52,10 @@ private:
 
     void stringifyVideoStats(VIDEO_STATS& stats, char* output, int length);
 
+    void stringifyCompactVideoStats(VIDEO_STATS& stats, char* output, int length);
+
+    SDL_Color getVideoStatsColor(VIDEO_STATS& stats);
+
     void logVideoStats(VIDEO_STATS& stats, const char* title);
 
     void addVideoStats(VIDEO_STATS& src, VIDEO_STATS& dst);

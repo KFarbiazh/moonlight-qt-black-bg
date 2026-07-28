@@ -9,7 +9,7 @@ OverlayManager::OverlayManager() :
 {
     memset(m_Overlays, 0, sizeof(m_Overlays));
 
-    m_Overlays[OverlayType::OverlayDebug].color = {0xD0, 0xD0, 0x00, 0xFF};
+    m_Overlays[OverlayType::OverlayDebug].color = {0xFF, 0xFF, 0xFF, 0xFF};
     m_Overlays[OverlayType::OverlayDebug].fontSize = 20;
 
     m_Overlays[OverlayType::OverlayStatusUpdate].color = {0xCC, 0x00, 0x00, 0xFF};
@@ -111,6 +111,11 @@ SDL_Color OverlayManager::getOverlayColor(OverlayType type)
     return m_Overlays[type].color;
 }
 
+void OverlayManager::setOverlayColor(OverlayType type, SDL_Color color)
+{
+    m_Overlays[type].color = color;
+}
+
 void OverlayManager::setOverlayRenderer(IOverlayRenderer* renderer)
 {
     m_Renderer = renderer;
@@ -148,12 +153,13 @@ void OverlayManager::notifyOverlayUpdated(OverlayType type)
     SDL_Surface* oldSurface = (SDL_Surface*)SDL_AtomicSetPtr(
         (void**)&m_Overlays[type].surface,
         m_Overlays[type].enabled ?
-            // The _Wrapped variant is required for line breaks to work
+            // The _Wrapped variant is required for line breaks to work.
+            // The performance overlay is drawn without an outline.
             RenderTextOutlinedWrapped(m_Overlays[type].font,
                                       m_Overlays[type].text,
                                       m_Overlays[type].color,
                                       {0, 0, 0, 255},
-                                      4,
+                                      type == OverlayType::OverlayDebug ? 0 : 4,
                                       1024)
             : nullptr);
 

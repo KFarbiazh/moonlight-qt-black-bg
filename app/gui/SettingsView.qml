@@ -1788,14 +1788,48 @@ Flickable {
                     }
                 }
 
-                CheckBox {
-                    id: showPerformanceOverlay
+                Label {
                     width: parent.width
-                    text: qsTr("Show performance stats while streaming")
+                    id: performanceOverlayTitle
+                    text: qsTr("Performance stats overlay")
                     font.pointSize: 12
-                    checked: StreamingPreferences.showPerformanceOverlay
-                    onCheckedChanged: {
-                        StreamingPreferences.showPerformanceOverlay = checked
+                    wrapMode: Text.Wrap
+                }
+
+                AutoResizingComboBox {
+                    // ignore setting the index at first, and actually set it when the component is loaded
+                    Component.onCompleted: {
+                        if (!StreamingPreferences.showPerformanceOverlay) {
+                            currentIndex = 0
+                        }
+                        else if (StreamingPreferences.compactPerformanceOverlay) {
+                            currentIndex = 1
+                        }
+                        else {
+                            currentIndex = 2
+                        }
+
+                        activated(currentIndex)
+                    }
+
+                    id: performanceOverlayComboBox
+                    textRole: "text"
+                    model: ListModel {
+                        id: performanceOverlayListModel
+                        ListElement {
+                            text: qsTr("Off")
+                        }
+                        ListElement {
+                            text: qsTr("Compact (FPS, bitrate, latency)")
+                        }
+                        ListElement {
+                            text: qsTr("Full")
+                        }
+                    }
+                    // ::onActivated must be used, as it only listens for when the index is changed by a human
+                    onActivated : {
+                        StreamingPreferences.showPerformanceOverlay = currentIndex !== 0
+                        StreamingPreferences.compactPerformanceOverlay = currentIndex === 1
                     }
 
                     ToolTip.delay: 1000

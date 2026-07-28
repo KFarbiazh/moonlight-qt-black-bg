@@ -967,6 +967,49 @@ void FFmpegVideoDecoder::stringifyVideoStats(VIDEO_STATS& stats, char* output, i
     }
 }
 
+void FFmpegVideoDecoder::stringifyCompactVideoStats(VIDEO_STATS& stats, char* output, int length)
+{
+    // Total pipeline latency added by streaming: host encode + network + decode + pacing + render
+    double totalLatencyMs = 0;
+    if (stats.framesWithHostProcessingLatency > 0) {
+        totalLatencyMs += (double)stats.totalHostProcessingLatency / 10 / stats.framesWithHostProcessingLatency;
+    }
+    totalLatencyMs += stats.lastRtt;
+    if (stats.decodedFrames > 0) {
+        totalLatencyMs += (stats.totalDecodeTimeUs / 1000.0) / stats.decodedFrames;
+    }
+    if (stats.renderedFrames > 0) {
+        totalLatencyMs += (stats.totalPacerTimeUs / 1000.0) / stats.renderedFrames;
+        totalLatencyMs += (stats.totalRenderTimeUs / 1000.0) / stats.renderedFrames;
+    }
+
+    double avgVideoKbps = m_BwTracker.GetAverageMbps() * 1000.0;
+
+    snprintf(output, length,
+             "%.0f FPS | %.0f kbps | %.0f ms",
+             stats.renderedFps,
+             avgVideoKbps,
+             totalLatencyMs);
+}
+
+SDL_Color FFmpegVideoDecoder::getVideoStatsColor(VIDEO_STATS& stats)
+{
+    float netDropPct = stats.totalFrames > 0 ?
+                (float)stats.networkDroppedFrames / stats.totalFrames * 100 : 0;
+    float jitterDropPct = stats.decodedFrames > 0 ?
+                (float)stats.pacerDroppedFrames / stats.decodedFrames * 100 : 0;
+
+    if (netDropPct > 2.0f || jitterDropPct > 2.0f || (stats.lastRtt != 0 && stats.lastRttVariance > 30)) {
+        return {0xFF, 0x50, 0x50, 0xFF}; // red: connection is struggling
+    }
+    else if (netDropPct > 0.5f || jitterDropPct > 0.5f || (stats.lastRtt != 0 && stats.lastRttVariance > 10)) {
+        return {0xFF, 0xCC, 0x00, 0xFF}; // yellow: minor network issues
+    }
+    else {
+        return {0xFF, 0xFF, 0xFF, 0xFF}; // white: all good
+    }
+}
+
 void FFmpegVideoDecoder::logVideoStats(VIDEO_STATS& stats, const char* title)
 {
     if (stats.renderedFps > 0 || stats.renderedFrames != 0) {
@@ -2013,9 +2056,20 @@ int FFmpegVideoDecoder::submitDecodeUnit(PDECODE_UNIT du)
             addVideoStats(m_LastWndVideoStats, lastTwoWndStats);
             addVideoStats(m_ActiveWndVideoStats, lastTwoWndStats);
 
-            stringifyVideoStats(lastTwoWndStats,
-                                Session::get()->getOverlayManager().getOverlayText(Overlay::OverlayDebug),
-                                Session::get()->getOverlayManager().getOverlayMaxTextLength());
+            // Colorize the overlay when the connection is degrading
+            Session::get()->getOverlayManager().setOverlayColor(Overlay::OverlayDebug,
+                                                                getVideoStatsColor(lastTwoWndStats));
+
+            if (StreamingPreferences::get()->compactPerformanceOverlay) {
+                stringifyCompactVideoStats(lastTwoWndStats,
+                                           Session::get()->getOverlayManager().getOverlayText(Overlay::OverlayDebug),
+                                           Session::get()->getOverlayManager().getOverlayMaxTextLength());
+            }
+            else {
+                stringifyVideoStats(lastTwoWndStats,
+                                    Session::get()->getOverlayManager().getOverlayText(Overlay::OverlayDebug),
+                                    Session::get()->getOverlayManager().getOverlayMaxTextLength());
+            }
             Session::get()->getOverlayManager().setOverlayTextUpdated(Overlay::OverlayDebug);
         }
 
