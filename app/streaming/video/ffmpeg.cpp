@@ -2060,7 +2060,7 @@ int FFmpegVideoDecoder::submitDecodeUnit(PDECODE_UNIT du)
             Session::get()->getOverlayManager().setOverlayColor(Overlay::OverlayDebug,
                                                                 getVideoStatsColor(lastTwoWndStats));
 
-            if (StreamingPreferences::get()->compactPerformanceOverlay) {
+            if (Session::get()->getOverlayManager().isDebugOverlayCompact()) {
                 stringifyCompactVideoStats(lastTwoWndStats,
                                            Session::get()->getOverlayManager().getOverlayText(Overlay::OverlayDebug),
                                            Session::get()->getOverlayManager().getOverlayMaxTextLength());

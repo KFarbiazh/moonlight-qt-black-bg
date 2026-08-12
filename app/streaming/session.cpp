@@ -1938,6 +1938,7 @@ void Session::exec()
     RichPresenceManager presence(*m_Preferences, m_App.name);
 
     // Toggle the stats overlay if requested by the user
+    m_OverlayManager.setDebugOverlayCompact(m_Preferences->compactPerformanceOverlay);
     m_OverlayManager.setOverlayState(Overlay::OverlayDebug, m_Preferences->showPerformanceOverlay);
 
     // Switch to async logging mode when we enter the SDL loop

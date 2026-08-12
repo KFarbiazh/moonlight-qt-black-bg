@@ -28,6 +28,9 @@ public:
     ~OverlayManager();
 
     bool isOverlayEnabled(OverlayType type);
+    bool isDebugOverlayCompact();
+    void setDebugOverlayCompact(bool compact);
+    void cycleDebugOverlayMode();
     char* getOverlayText(OverlayType type);
     void updateOverlayText(OverlayType type, const char* text);
     int getOverlayMaxTextLength();
@@ -53,6 +56,7 @@ private:
         TTF_Font* font;
         SDL_Surface* surface;
     } m_Overlays[OverlayMax];
+    bool m_DebugOverlayCompact;
     IOverlayRenderer* m_Renderer;
     QByteArray m_FontData;
 };

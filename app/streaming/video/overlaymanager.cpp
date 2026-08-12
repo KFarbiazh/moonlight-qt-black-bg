@@ -4,6 +4,7 @@
 using namespace Overlay;
 
 OverlayManager::OverlayManager() :
+    m_DebugOverlayCompact(false),
     m_Renderer(nullptr),
     m_FontData(Path::readDataFile("ModeSeven.ttf"))
 {
@@ -51,6 +52,32 @@ OverlayManager::~OverlayManager()
 bool OverlayManager::isOverlayEnabled(OverlayType type)
 {
     return m_Overlays[type].enabled;
+}
+
+bool OverlayManager::isDebugOverlayCompact()
+{
+    return m_DebugOverlayCompact;
+}
+
+void OverlayManager::setDebugOverlayCompact(bool compact)
+{
+    m_DebugOverlayCompact = compact;
+}
+
+void OverlayManager::cycleDebugOverlayMode()
+{
+    // Off -> Compact -> Full -> Off
+    if (!m_Overlays[OverlayType::OverlayDebug].enabled) {
+        m_DebugOverlayCompact = true;
+        setOverlayState(OverlayType::OverlayDebug, true);
+    }
+    else if (m_DebugOverlayCompact) {
+        // The overlay text switches to full stats on the next stats window
+        m_DebugOverlayCompact = false;
+    }
+    else {
+        setOverlayState(OverlayType::OverlayDebug, false);
+    }
 }
 
 char* OverlayManager::getOverlayText(OverlayType type)
