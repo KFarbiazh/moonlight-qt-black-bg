@@ -1,7 +1,7 @@
 # Moonlight PC
 > **Fork note:** this fork improves the connection/loading screens and the stats overlay:
 > - black loading screen background by default, selectable in the settings (Black / Gray / Midnight blue / Slate);
-> - compact performance overlay mode — a single clean line with FPS, bitrate and total added latency;
+> - compact performance overlay mode — a single clean line with FPS, bitrate and total added latency; the overlay hotkey (Ctrl+Alt+Shift+S / Select+L1+R1+X) cycles off → compact → full;
 > - video bitrate in kbps on the performance overlay (average + peak in full mode);
 > - overlay text is white without an outline, and turns yellow/red when your connection degrades.
 >
